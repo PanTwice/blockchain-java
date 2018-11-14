@@ -2,7 +2,6 @@ package one.wangwei.blockchain;
 
 import com.zhijl.common.encryptor.bytetool.Base58;
 import com.zhijl.common.encryptor.bytetool.Hex;
-import one.wangwei.blockchain.util.BtcAddressUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.bouncycastle.crypto.digests.RIPEMD160Digest;
 import org.bouncycastle.util.Arrays;
