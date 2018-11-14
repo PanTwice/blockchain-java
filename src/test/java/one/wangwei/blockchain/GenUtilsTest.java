@@ -5,6 +5,7 @@ import com.zhijl.common.encryptor.bytetool.Hex;
 import one.wangwei.blockchain.util.BtcAddressUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.bouncycastle.crypto.digests.RIPEMD160Digest;
+import org.bouncycastle.util.Arrays;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.io.IOException;
 /**
  * 〈尝试抽取代码未工具类〉
  *
- * @author Administrator
+ * @author liu
  * @date 2018/11/14
  * @since 1.0.0
  */
@@ -32,7 +33,7 @@ public class GenUtilsTest {
         byte[] versionedPayload = addrStream.toByteArray();
 
         // 3. 计算校验码
-        byte[] checksum = BtcAddressUtils.checksum(versionedPayload);
+        byte[] checksum = checksum(versionedPayload);
 
         // 4. 得到 version + paylod + checksum 的组合
         addrStream.write(checksum);
@@ -52,6 +53,14 @@ public class GenUtilsTest {
         byte[] output = new byte[ripemd160.getDigestSize()];
         ripemd160.doFinal(output, 0);
         return output;
+    }
+
+    public static byte[] checksum(byte[] payload) {
+        return Arrays.copyOfRange(doubleHash(payload), 0, 4);
+    }
+
+    public static byte[] doubleHash(byte[] data) {
+        return DigestUtils.sha256(DigestUtils.sha256(data));
     }
 
     public static void main(String[] args) throws IOException {
