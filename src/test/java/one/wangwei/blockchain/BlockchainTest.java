@@ -1,6 +1,5 @@
 package one.wangwei.blockchain;
 
-import one.wangwei.blockchain.cli.CLI;
 import one.wangwei.blockchain.wallet.Wallet;
 
 /**
@@ -15,4 +14,6 @@ public class BlockchainTest {
         Wallet wallet = new Wallet();
         System.out.println(wallet.getAddress());
     }
+
+
 }

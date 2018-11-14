@@ -73,6 +73,12 @@
             <version>1.59</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.zhijl.common</groupId>
+            <artifactId>gm_encryptor</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,5 +1,6 @@
 package one.wangwei.blockchain.wallet;
 
+import com.zhijl.common.encryptor.bytetool.Hex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import one.wangwei.blockchain.util.Base58Check;
@@ -93,6 +94,7 @@ public class Wallet implements Serializable {
      */
     public String getAddress() {
         try {
+            System.out.println(Hex.encode(this.getPublicKey()));
             // 1. 获取 ripemdHashedKey
             byte[] ripemdHashedKey = BtcAddressUtils.ripeMD160Hash(this.getPublicKey());
 
