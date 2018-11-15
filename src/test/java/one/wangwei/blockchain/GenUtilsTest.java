@@ -2,6 +2,7 @@ package one.wangwei.blockchain;
 
 import com.zhijl.common.encryptor.bytetool.Base58;
 import com.zhijl.common.encryptor.bytetool.Hex;
+import com.zhijl.common.encryptor.digest.Hash;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.bouncycastle.crypto.digests.RIPEMD160Digest;
 import org.bouncycastle.util.Arrays;
@@ -19,10 +20,12 @@ import java.io.IOException;
 public class GenUtilsTest {
 
 
-    public static String initWallet(String pubKey) throws IOException {
+    public static String genAddr(String pubKey) throws IOException {
 
+        // 公钥hex解码
         byte[] pubKeyArr = Hex.decode(pubKey);
 
+        //
         byte[] ripemaHashArr = ripeMD160Hash(pubKeyArr);
 
         // 2. 添加版本 0x00
@@ -46,7 +49,7 @@ public class GenUtilsTest {
 
     public static byte[] ripeMD160Hash(byte[] pubKey) {
         //1. 先对公钥做 sha256 处理
-        byte[] shaHashedKey = DigestUtils.sha256(pubKey);
+        byte[] shaHashedKey = Hash.getHashSHA256(pubKey);
         RIPEMD160Digest ripemd160 = new RIPEMD160Digest();
         ripemd160.update(shaHashedKey, 0, shaHashedKey.length);
         byte[] output = new byte[ripemd160.getDigestSize()];
@@ -59,18 +62,18 @@ public class GenUtilsTest {
     }
 
     public static byte[] doubleHash(byte[] data) {
-        return DigestUtils.sha256(DigestUtils.sha256(data));
+//        return DigestUtils.sha256(DigestUtils.sha256(data));
+        return Hash.getHashSHA256((Hash.getHashSHA256(data)));
     }
 
     public static void main(String[] args) throws IOException {
         /**
          * 0443203f2b0777b35e04bec75225571bc5160d4a54ffbab0c9de94cee3b088ffb34031084c314063cf999c5d01f6f3a5693543c0a139327c814fbf31e307c7faf6
          1CrLqnCzy8dZ3TG37ET89SMKFYyqMrEetn
+
          */
         String pubKey = "b77232a2047e59445c1c10ea3e6aeffb2aa21951fe62ef39dbe928298e36f0ad933806c8c72ae32313e075f60bc2c335737e01064b0c27f2037b1d0c4481ea0320f2aa36dc";
-        System.out.println(initWallet(pubKey));
+        System.out.println(genAddr(pubKey));
     }
-
-
 
 }
